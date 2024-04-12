@@ -1,49 +1,68 @@
-# KickstartAngular
+# Snowplow Micro
 
-## Version Details
+## Prerequisites
+
+1. NodeJS 16
+2. Git
+3. Docker 
+
+## Setup Tracker
+
+### 1. Install the dependencies
+
+```bash
+npm install
 ```
-node = v14.19.0
-npm = 8.5.2
-angular-cli = 12.2.16
+
+### 2. Update the environment files
+
+#### Local Deployment
+
+Update the `snowplowCollectorURL` field value in `src/environments.ts` file.
+
+#### Production Deployment
+
+Update the `snowplowCollectorURL` field value in `src/environments.prod.ts` file.
+
+```typescript
+export const environment = {
+  production: false,
+  snowplowCollectorURL: 'localhost:9090'
+};
 ```
 
-## Running the Project
+## Setup Snowplow Micro
 
+Open your terminal and execute. This will start your snowplow-micro instance on localhost:9090
+
+```bash
+docker run -it --rm --name snowplow-micro -p 9090:9090 snowplow/snowplow-micro:2.1.0
 ```
-ng serve
+
+## Serve the application
+
+Open another terminal in the cloned repo directory and execute
+
+```bash
+npm run start
 ```
 
-The above command will start the server at http://localhost:4200/
+Your application will be served on `http://localhost:4200`
 
-## Tasks
+## View Snowplow Dashboard
 
-### Task 1 - Running Application Locally
+Open `http://localhost:9090/micro/ui` to view your snowplow micro dashboard.
 
-1. Fork this repository.
-2. Checkout the development branch on your local machine.
-3. Do research on how to install angular dependencies and install them.
-4. Test the application locally and verify it's running at http://localhost:4200/
+## Snaphots
 
-### Task 2 - Create a CI/CD Pipeline in Azure DevOps and deploy to service of your choice
+### Application with tracker request details
 
-1. Create a feature branch named "feature/ado-cicd" and checkout to this new branch.
-2. Create a Build pipeline.
-3. Publish artifacts.
-4. Create a Release Pipeline and consume the artifacts.
-5. Deploy to service of your choice (Web App, Azure VM, Azure Blob).
-6. Test the application.
+![app](./__assets__/Screenshot%202024-04-13%20at%2012.05.00%20AM.png)
 
-### Task 3 - Containerize the application
+### Snowplow Event Stream
 
-1. Checkout to a new feature Branch "feature/docker".
-2. Create a Dockerfile.
-3. Create a Build pipeline.
-3. Build the image using CI.
-4. Tag the image with proper name. (AVOID USING "latest". Use Semantic Versioning. eg "v1.0.0". So the image name should be like "xxxxxx/yyyyyy:v1.0.0").
-5. Push the image to container registry of your choice.
-6. Create a release pipeline and deploy to ACI (Azure Container Registry).
+![a](./__assets__/Screenshot%202024-04-13%20at%2012.05.31%20AM.png)
 
-## RULES!!!
+### Snowplow Event Table
 
-- You have to strictly follow the branching method. Working on master or development branch is STRICTLY FORBIDDEN!
-- EACH TASK IS TO BE DOCUMENTED ALONG WITH SCREENSHOTS. DOCUMENTATION IS EQUALLY VALUABLE AS THE IMPLEMENTATION ITSELF.
+![b](./__assets__/Screenshot%202024-04-13%20at%2012.05.48%20AM.png)
