@@ -1,5 +1,16 @@
 # Snowplow Micro
 
+Snowplow Tracker has been integrated to track the following events:
+
+Out-of-the-box events:
+
+1. Page View
+2. Page Ping (Activities)
+3. Web Vitals
+4. Link Clicks
+5. Button Clicks
+6. Timezone & GeoLocation
+
 ## Prerequisites
 
 1. NodeJS 16
