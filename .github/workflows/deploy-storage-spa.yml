@@ -2,7 +2,7 @@ name: Build & Deploy Angular to Azure Storage
 
 on:
   push:
-    branches: ["hitesh/addwf"]
+    branches: ["master"]
   workflow_dispatch:
 
 jobs:
