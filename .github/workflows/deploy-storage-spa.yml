@@ -73,6 +73,6 @@ jobs:
             az storage blob upload-batch \
               --account-name "$AZURE_STORAGE_ACCOUNT" \
               -d '$web' \
-              -s site \
+              -s site/kickstart-angular \
               --overwrite \
               --auth-mode login
