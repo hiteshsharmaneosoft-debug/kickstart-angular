@@ -33,46 +33,46 @@ jobs:
           name: dist
           path: dist
 
-  # deploy:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   permissions:   
-  #     id-token: write    # required for OIDC authentication with Azure
-  #     contents: read
-  #   env:
-  #     AZURE_STORAGE_ACCOUNT: ${{ vars.AZURE_STORAGE_ACCOUNT }}
-  #   steps:
-  #     - name: Download artifact
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: dist
-  #         path: site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:   
+      id-token: write    # required for OIDC authentication with Azure
+      contents: read
+    env:
+      AZURE_STORAGE_ACCOUNT: ${{ vars.AZURE_STORAGE_ACCOUNT }}
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: site
 
-  #     - name: Azure Login
-  #       uses: azure/login@v2
-  #       with:
-  #         client-id: ${{ secrets.AZURE_CLIENT_ID }}
-  #         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-  #         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-  #     - name: Enable Static Website
-  #       uses: azure/CLI@v2
-  #       with:
-  #         inlineScript: |
-  #           az storage blob service-properties update \
-  #             --account-name "$AZURE_STORAGE_ACCOUNT" \
-  #             --static-website \
-  #             --index-document index.html \
-  #             --404-document index.html \
-  #             --auth-mode login
+      - name: Enable Static Website
+        uses: azure/CLI@v2
+        with:
+          inlineScript: |
+            az storage blob service-properties update \
+              --account-name "$AZURE_STORAGE_ACCOUNT" \
+              --static-website \
+              --index-document index.html \
+              --404-document index.html \
+              --auth-mode login
 
-  #     - name: Deploy Angular app
-  #       uses: azure/CLI@v2
-  #       with:
-  #         inlineScript: |
-  #           az storage blob upload-batch \
-  #             --account-name "$AZURE_STORAGE_ACCOUNT" \
-  #             -d '$web' \
-  #             -s site \
-  #             --overwrite \
-  #             --auth-mode login
+      - name: Deploy Angular app
+        uses: azure/CLI@v2
+        with:
+          inlineScript: |
+            az storage blob upload-batch \
+              --account-name "$AZURE_STORAGE_ACCOUNT" \
+              -d '$web' \
+              -s site \
+              --overwrite \
+              --auth-mode login
