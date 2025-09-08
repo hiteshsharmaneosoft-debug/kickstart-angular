@@ -50,6 +50,9 @@ step4: Assign Role to the App
     -> az role assignment create --assignee-object-id 3ce01e6e-a0c1-41ba-96a1-2f21bf8fe49b --assignee-principal-type ServicePrincipal --role "Storage Blob Data Contributor" --scope "/subscriptions/3b4e4363-b5f5-4d3e-a287-d56c6668229f/resourceGroups/rg-neo-cus-test/providers/Microsoft.Storage/storageAccounts/stneocustest"
 
 
+      az role assignment create --assignee-object-id 3ce01e6e-a0c1-41ba-96a1-2f21bf8fe49b --assignee-principal-type ServicePrincipal --role "Storage Account Contributor" --scope "/subscriptions/3b4e4363-b5f5-4d3e-a287-d56c6668229f/resourceGroups/rg-neo-cus-test/providers/Microsoft.Storage/storageAccounts/stneocustest"
+
+
     az ad app federated-credential create \
   --id $APP_ID \
   --parameters "$FED_CREDS"
